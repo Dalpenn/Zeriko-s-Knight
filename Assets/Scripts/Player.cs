@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     #region 변수들
-    Vector2 inputVec;
+    public Vector2 inputVec;
     float player_spd = 3;
 
     Rigidbody2D rigid;
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         rigid.MovePosition(rigid.position + nextVec);
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         anim.SetFloat("Speed", inputVec.magnitude);     // magnitude는 순수하게 "크기"만 갖고 있는 성분이다. inputVec의 크기가 0인지 아닌지만 확인하기 위한 용도.
 
