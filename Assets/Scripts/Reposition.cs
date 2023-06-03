@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {
+    Collider2D col;
+
+    void Awake()
+    {
+        col = GetComponent<Collider2D>();
+    }
+
+
     void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Area"))
@@ -25,6 +33,7 @@ public class Reposition : MonoBehaviour
 
         switch (transform.tag)      // 플레이어가 이 스크립트를 가진 오브젝트의 콜라이더에서 "벗어나는 경우", 트리거 발동
         {
+            // 문제점 : 플레이어가 아무런 움직임을 취하지 않은 상태로 몬스터에게 밀려서 이동한 경우, dirX & dirY 값이 0이어서 아래 코드가 꼬여 맵이 이상하게 이동함
             case "Ground":      // 플레이어가 Ground 태그를 가진 콜라이더에서 벗어난 경우
                 {
                     if (diffX > diffY)      // 만약 diffX가 diffY보다 크다면 타일을 이동.
@@ -41,6 +50,11 @@ public class Reposition : MonoBehaviour
 
             case "Enemy":      // 플레이어가 Enemy 태그를 가진 콜라이더에서 벗어난 경우
                 {
+                    if (col.enabled)
+                    {
+                        transform.Translate(playerDir * 20 + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0f));        // 몬스터가 화면 밖으로 벗어나면 플레이어 앞 화면 랜덤한 위치로 소환되도록 설정
+                    }
+
                     break;
                 }
         }
