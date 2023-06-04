@@ -42,6 +42,11 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        sp.flipX = target.position.x < rigid.position.x;
+        sp.flipX = target.position.x < rigid.position.x;        // 몬스터가 바라보는 방향이 플레이어 쪽이도록 조정
+    }
+
+    private void OnEnable()
+    {
+        target = GameManager.instance.player.GetComponent<Rigidbody2D>(); 
     }
 }

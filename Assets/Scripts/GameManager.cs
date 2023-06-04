@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     #region º¯¼öµé
     public static GameManager instance;
+    public PoolManager poolMng;
     public Player player;
     #endregion
 

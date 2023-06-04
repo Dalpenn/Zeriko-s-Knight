@@ -25,6 +25,14 @@ public class Player : MonoBehaviour
     }
 
 
+    // InputSystem을 사용하지 않는 경우, 플레이어 이동 코드
+    //void Update()
+    //{
+    //    inputVec.x = Input.GetAxisRaw("Horizontal");
+    //    inputVec.y = Input.GetAxisRaw("Vertical");
+    //}
+
+
     void FixedUpdate()
     {
         Vector2 nextVec = inputVec * player_spd * Time.fixedDeltaTime;      
@@ -33,6 +41,7 @@ public class Player : MonoBehaviour
 
         rigid.MovePosition(rigid.position + nextVec);
     }
+
 
     void LateUpdate()
     {
@@ -44,10 +53,16 @@ public class Player : MonoBehaviour
         }
     }
 
-
+    #region InputSystem 함수
     // Unity의 Input System 사용을 위한 함수
     void OnMove(InputValue value)
     {
         inputVec = value.Get<Vector2>();
     }
+
+    void OnJump(InputValue value) 
+    {
+        GameManager.instance.poolMng.Get(1);
+    }
+    #endregion
 }
