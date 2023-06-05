@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public Vector2 inputVec;
     float player_spd = 3;
 
+    public Scanner scanner;
+
     Rigidbody2D rigid;
     SpriteRenderer sp;
     Animator anim;
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         #region 가져온 변수들 초기화(반드시 필요)
+        scanner = GetComponent<Scanner>();
         rigid = GetComponent<Rigidbody2D>();        // Unity의 Player가 갖고 있는 Rigidbody2D속성을 스크립트로 가져옴.
         sp = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -62,7 +65,7 @@ public class Player : MonoBehaviour
 
     void OnJump(InputValue value) 
     {
-        GameManager.instance.poolMng.Get(1);
+        GameManager.instance.weapon.LevelUp(3, 2);
     }
     #endregion
 }

@@ -23,17 +23,18 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    #region 풀매니저에 자식오브젝트의 형태로 선택한 게임오브젝트를 생성
     public GameObject Get(int i)
     {
         GameObject select = null;
 
         // foreach문은 index를 사용하지 않지만, 배열이나 리스트같은 여러개의 데이터를 담을 수 있는 구조체들을 순회하는 for문
-        foreach (GameObject item in enemy_pools[i])     // enemy_pools[i]내에 존재하는 GameObject들에 접근
+        foreach (GameObject enemyObj in enemy_pools[i])     // enemy_pools[i]내에 존재하는 GameObject들에 접근
         {
-            if (!item.activeSelf)       // 선택한 풀의 비활성화된 게임오브젝트에 접근
+            if (!enemyObj.activeSelf)       // 선택한 풀의 비활성화된 게임오브젝트에 접근
             {
                 // 발견하면 select 변수에 할당
-                select = item;
+                select = enemyObj;
                 select.SetActive(true);     // select 변수에 할당된 GameObject를 활성화
 
                 break;
@@ -49,4 +50,5 @@ public class PoolManager : MonoBehaviour
 
         return select;
     }
+    #endregion
 }
