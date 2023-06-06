@@ -80,12 +80,12 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("PlayerAttack"))
+        if (!collision.CompareTag("PlayerAttack") || !isLive)       // 몬스터가 PlayerAttack이외 태그의 콜리젼과 충돌하거나, 죽어있는 경우에는 무시
         {
             return;
         }
 
-        // else 생략
+        // else 생략 ~ 살아있을 때에만 아래 코드가 실행됨
         hp -= collision.GetComponent<PlayerAttack>().dmg;
         StartCoroutine(KnockBack());
 
@@ -105,7 +105,12 @@ public class Enemy : MonoBehaviour
             anim.SetBool("isDead", true);
             #endregion
 
-            // Dead(); 함수는 여기서 바로 실행하면 죽는 모션이 나오기 전에 비활성화되므로, 애니메이션에서 실행시킬 것임
+            #region 몬스터 처치 관련 변수들 설정
+            GameManager.instance.kill++;
+            GameManager.instance.GetExp();
+            #endregion
+
+            // Dead(); 함수는 여기서 바로 실행하면 죽는 모션이 나오기 전에 비활성화되므로, 애니메이션에서 Event추가로 실행시킬 것임
         }
     }
 
