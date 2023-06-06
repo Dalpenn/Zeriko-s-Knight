@@ -65,7 +65,8 @@ public class Player : MonoBehaviour
 
     void OnJump(InputValue value) 
     {
-        GameManager.instance.weapon.LevelUp(3, 2);
+
+        GameManager.instance.weapon.LevelUp(0.5f, 1);
     }
     #endregion
 }

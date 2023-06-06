@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
     #region 변수들
     public float dmg;
     public int penetrate;
-    public float attackSpeed;
+    public float bulletSpeed;
 
     Rigidbody2D rigid;
     #endregion
@@ -29,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (penetrate > -1)     // 관통력이 0 이상인 무기만 dir방향으로 날아가도록 설정
         {
-            rigid.velocity = dir * attackSpeed;
+            rigid.velocity = dir * bulletSpeed;
         }
     }
 

@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour
     #region 레벨업 시, 무기 성능 업그레이드
     public void LevelUp(float dmg, int count)
     {
-        this.dmg = dmg;
+        this.dmg += dmg;
         this.count += count;
 
         if (id == 0)        // 레벨업 하는 경우, 무기 id에 따라 함수 실행

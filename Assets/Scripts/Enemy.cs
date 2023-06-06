@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sp;
     Animator anim;
+
+    WaitForFixedUpdate wait;
     #endregion
 
 
@@ -24,12 +26,13 @@ public class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        wait = new WaitForFixedUpdate();
     }
 
 
     void FixedUpdate()
     {
-        if (!isLive)
+        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))       // 살아있지 않거나 Hit애니메이션이 돌아가고 있는 상황에는 동작 정지
         {
             return;
         }
@@ -74,10 +77,11 @@ public class Enemy : MonoBehaviour
 
         // else 생략
         hp -= collision.GetComponent<PlayerAttack>().dmg;
+        StartCoroutine(KnockBack());
 
         if (hp > 0)
         {
-
+            anim.SetTrigger("Hit");
         }
         else
         {
@@ -88,5 +92,14 @@ public class Enemy : MonoBehaviour
     void Dead()     // 몬스터가 죽었을 때의 함수
     {
         gameObject.SetActive(false);
+    }
+
+    IEnumerator KnockBack()
+    {
+        yield return wait;  // 하나의 물리 프레임 딜레이를 준다
+
+        Vector3 playerPos = GameManager.instance.player.transform.position;
+        Vector3 dirVec = transform.position - playerPos;
+        rigid.AddForce(dirVec.normalized * 50, ForceMode2D.Impulse);         // 플레이어와 반대방향으로 몬스터를 밀어내도록 힘을 줌
     }
 }
