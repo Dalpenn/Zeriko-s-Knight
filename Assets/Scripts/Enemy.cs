@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     bool isLive;
 
     Rigidbody2D rigid;
+    Collider2D col;
     SpriteRenderer sp;
     Animator anim;
 
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
         sp = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         wait = new WaitForFixedUpdate();
@@ -32,7 +34,7 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))       // 살아있지 않거나 Hit애니메이션이 돌아가고 있는 상황에는 동작 정지
+        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("hurt"))       // 살아있지 않거나 Hit애니메이션이 돌아가고 있는 상황에는 동작 정지 (애니메이터 트리거 이름이 아닌, "상태 이름"을 넣어야 한다)
         {
             return;
         }
@@ -56,7 +58,15 @@ public class Enemy : MonoBehaviour
     void OnEnable()     // 몬스터가 생성되었을 때 초기값 설정
     {
         target = GameManager.instance.player.GetComponent<Rigidbody2D>();
+
+        #region 재활용을 위해, 생성되었을 때에 생존관련 변수들 설정 (안해놓으면 죽을 때 해놨던 설정들로 있어서 동작하지 않기 때문)
         isLive = true;
+        col.enabled = true;
+        rigid.simulated = true;
+        sp.sortingOrder = 2;
+        anim.SetBool("isDead", false);
+        #endregion
+
         hp = maxHp;
     }
 
@@ -85,7 +95,17 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            Dead();
+            #region 생존관련 변수들 설정 (죽은 걸로)
+            isLive = false;                 // 생존변수 false로
+            col.enabled = false;            // 콜라이더 끄기
+            rigid.simulated = false;        // rigidbody 끄기
+
+            sp.sortingOrder = 1;            // 죽어서 다른 몬스터를 가리면 안되므로, sprite의 order를 1로 내린다
+
+            anim.SetBool("isDead", true);
+            #endregion
+
+            // Dead(); 함수는 여기서 바로 실행하면 죽는 모션이 나오기 전에 비활성화되므로, 애니메이션에서 실행시킬 것임
         }
     }
 
@@ -100,6 +120,6 @@ public class Enemy : MonoBehaviour
 
         Vector3 playerPos = GameManager.instance.player.transform.position;
         Vector3 dirVec = transform.position - playerPos;
-        rigid.AddForce(dirVec.normalized * 50, ForceMode2D.Impulse);         // 플레이어와 반대방향으로 몬스터를 밀어내도록 힘을 줌
+        rigid.AddForce(dirVec.normalized * 1, ForceMode2D.Impulse);         // 플레이어와 반대방향으로 몬스터를 밀어내도록 힘을 줌
     }
 }
