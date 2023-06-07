@@ -106,7 +106,7 @@ public class Enemy : MonoBehaviour
             #endregion
 
             #region 몬스터 처치 관련 변수들 설정
-            GameManager.instance.kill++;
+            GameManager.instance.curKill++;
             GameManager.instance.GetExp();
             #endregion
 

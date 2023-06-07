@@ -13,9 +13,14 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public float maxGameTime = 4 * 10f;
 
+    public int stageLv;
+
     [Header("# Player Info")]
+    public int curHp;
+    public int maxHp;
+    public int curKill;
+    public int[] nextKill;
     public int level;
-    public int kill;
     public int curExp;
     public int[] nextExp;
     //public int[] nextExp = {3, 5, 10, 100, 150, 210};         // 이렇게 여기에서 배열로 넣어줄 수도 있다
@@ -30,6 +35,11 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        curHp = maxHp;
     }
 
     void Update()
