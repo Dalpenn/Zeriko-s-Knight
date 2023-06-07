@@ -8,3 +8,27 @@
 #endregion
 
 // 레벨업은 GameManager의 weapon에 레벨업 원하는 무기를 넣으면 동작 된다
+
+#region
+#endregion
+
+#region
+#endregion
+
+#region
+#endregion
+
+#region
+#endregion
+
+#region
+#endregion
+
+#region
+
+#region
+#endregion
+
+#region
+#endregion
+#endregion

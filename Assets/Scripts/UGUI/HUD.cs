@@ -25,6 +25,11 @@ public class HUD : MonoBehaviour
         {
             case InfoType.Exp:
                 {
+                    float curExp = GameManager.instance.curExp;
+                    float maxExp = GameManager.instance.nextExp[GameManager.instance.level];
+
+                    mySlider.value = curExp / maxExp;       // 경험치바에 현재 경험치 % 나타내기
+
                     break;
                 }
             case InfoType.Level:

@@ -113,7 +113,7 @@ public class Weapon : MonoBehaviour
 
             Vector3 rotVec = Vector3.forward * 360 * i / count;
             playerAttack.Rotate(rotVec);
-            playerAttack.Translate(playerAttack.up * 1.2f, Space.World);
+            playerAttack.Translate(playerAttack.up * 1.8f, Space.World);
 
             playerAttack.GetComponent<PlayerAttack>().Init(dmg, -1, Vector3.zero);        // -1 is Infinity penetrate (-1은 무한관통을 의미한다는 주석), 이 무기에 방향요소는 필요없으므로 Vector3.zero를 넣는다
             #endregion
