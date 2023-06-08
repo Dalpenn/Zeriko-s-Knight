@@ -12,12 +12,13 @@ public class GameManager : MonoBehaviour
     [Header("# GameControl")]
     public float gameTime;
     public float maxGameTime = 4 * 10f;
+    public bool isGameStarted = false;
 
     public int stageLv;
 
     [Header("# Player Info")]
-    public int curHp;
-    public int maxHp;
+    public float curHp;
+    public float maxHp;
     public int curKill;
     public int[] nextKill;
     public int level;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     public PoolManager poolMng;
     public Player player;
     public Weapon weapon;
+    public Ctrl_Sc_SelectSkill ui_SelectSkill;
 
     #endregion
 
@@ -37,29 +39,57 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
-    {
-        curHp = maxHp;
-    }
-
     void Update()
     {
+        if (!isGameStarted)
+        {
+            return;
+        }
+
         gameTime += Time.deltaTime;
 
-        if (gameTime > maxGameTime)
+        #region 게임 진행시간 표시
+        if (gameTime > maxGameTime)         // 게임시간이 제한시간이 다되면, 더 이상 흘러가지 않고 제한시간이 표시되어있게하기
         {
             gameTime = maxGameTime;
         }
+        #endregion
     }
+
+    #region 게임 시작
+    public void GameStart()
+    {
+        curHp = maxHp;      // 시작 시 플레이어 hp 최대로 만들기
+
+        ui_SelectSkill.SelectStartSkill(0);
+        isGameStarted = true;
+    }
+    #endregion
 
     public void GetExp()
     {
         curExp++;      // GetExp함수가 실행되면 경험치가 오르도록 설정
 
-        if (curExp == nextExp[level])      // 만약 경험치가 올랐는데 레벨업 경험치량을 충족했을 시, 레벨업하고 현재 경험치는 0이 되도록 설정
+        if (curExp == nextExp[Mathf.Min(level, nextExp.Length - 1)])      // 만약 경험치가 올랐는데 레벨이 (만렙 -1) 레벨이었을 시, 계속 레벨업은 가능하나 요구 경험치는 만렙 경험치로 유지되도록 설정
         {
             level++;
             curExp = 0;
+            ui_SelectSkill.ShowScreen_Skill();
         }
     }
+
+    #region 게임 일시정지 / 재개
+    public void GamePause()
+    {
+        isGameStarted = false;
+        Time.timeScale = 0;
+    }
+
+    public void GameResume()
+    {
+
+        isGameStarted = true;
+        Time.timeScale = 1;
+    }
+    #endregion
 }

@@ -18,7 +18,10 @@ public class ItemData : ScriptableObject
     public ItemType itemType;       // 위에 선언해놓은 enum을 사용하기 위한 변수
     public int itemID;              // 스킬 구별하는 ID
     public string itemName;         // 스킬 이름
+
+    [TextArea]
     public string itemDesc;         // 스킬 설명
+
     public Sprite itemIcon;         // 선택 창에 나올 스킬 아이콘
 
     [Header("# Level Data")]

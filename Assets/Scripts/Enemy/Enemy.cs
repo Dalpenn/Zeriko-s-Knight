@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public float speed;
     public float hp;
     public float maxHp;
+    public float dmg;
     public RuntimeAnimatorController[] animCon;     // 여러 종류의 몬스터를 쓸 것이므로 배열로 선언
     public Rigidbody2D target;
 
@@ -34,6 +35,11 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!GameManager.instance.isGameStarted)
+        {
+            return;
+        }
+
         if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("hurt"))       // 살아있지 않거나 Hit애니메이션이 돌아가고 있는 상황에는 동작 정지 (애니메이터 트리거 이름이 아닌, "상태 이름"을 넣어야 한다)
         {
             return;
@@ -47,6 +53,11 @@ public class Enemy : MonoBehaviour
 
     void LateUpdate()
     {
+        if (!GameManager.instance.isGameStarted)
+        {
+            return;
+        }
+
         if (!isLive)
         {
             return;
@@ -76,6 +87,7 @@ public class Enemy : MonoBehaviour
         speed = data.speed;
         maxHp = data.hp;
         hp = data.hp;
+        dmg = data.dmg;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

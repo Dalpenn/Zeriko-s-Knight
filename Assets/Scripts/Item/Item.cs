@@ -16,23 +16,54 @@ public class Item : MonoBehaviour
     // 캔버스 출력 관련 변수들
     Image icon;
     Text txtLevel;
+    Text txtName;
+    Text txtDesc;
     #endregion
 
     private void Awake()
     {
         // 자식 오브젝트의 아이콘을 컨트롤해야하기 때문에 모든 자식 컴포넌트를 가져오는 GetComponentsInChildern을 사용
         // GetComponents는 배열 형태 / indexo 0은 자기자신이므로, index 1에 위치한 아이콘 컴포넌트를 가져옴
-        icon = GetComponentsInChildren<Image>()[1];
+        icon = GetComponentsInChildren<Image>()[2];
         icon.sprite = data.itemIcon;
 
+        #region 텍스트 초기화 관련
         Text[] txts = GetComponentsInChildren<Text>();
-        txtLevel = txts[0];         // text는 하나밖에 없으므로, txts index는 무조건 0이다
+        txtLevel = txts[0];         // text순서대로 index를 넣는다
+        txtName = txts[1];
+        txtDesc = txts[2];
+        #endregion
+
+        txtName.text = data.itemName;       // 스킬 이름은 처음에 딱 한번만 쓰면 되므로 여기서 적는다
     }
 
-    private void LateUpdate()
+    void OnEnable()
     {
         txtLevel.text = "Lv." + (level);
-        //txtLevel.text = "Lv." + (level + 1);      버튼에 레벨을 표시하는 스크립트
+
+        switch (data.itemType)
+        {
+            case ItemData.ItemType.Melee:
+            case ItemData.ItemType.Range:
+                {
+                    txtDesc.text = string.Format(data.itemDesc, data.dmgs[level] * 100, data.counts[level]);
+
+                    break;
+                }
+            case ItemData.ItemType.PlayerPassive_Rate:
+            case ItemData.ItemType.PlayerPassive_MovSpd:
+                {
+                    txtDesc.text = string.Format(data.itemDesc, data.passiveAmounts[level]);
+
+                    break;
+                }
+            default: 
+                {
+                    txtDesc.text = string.Format(data.itemDesc);
+
+                    break;
+                }
+        }
     }
 
     public void OnClick()

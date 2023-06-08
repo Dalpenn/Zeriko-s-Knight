@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 0
   itemID: 0
   itemName: "\uAC80"
-  itemDesc: 
+  itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n\uD68C\uC804\uCCB4 {1}\uAC1C \uCD94\uAC00"
   itemIcon: {fileID: 21300000, guid: 82e232c4b7118c044b006d312574bb11, type: 3}
   baseDmg: 1
   dmgs:
@@ -33,5 +33,10 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  passiveAmounts: []
+  passiveAmounts:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   projectile: {fileID: 1269363861354954969, guid: 2d7dd2ecfdf1b0e41a2435f722d57c87, type: 3}

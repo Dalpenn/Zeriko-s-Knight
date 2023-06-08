@@ -26,6 +26,11 @@ public class Weapon : MonoBehaviour
 
     private void Update()       // 무기 수치 지속적인 업데이트 (레벨업 시 고려)
     {
+        if (!GameManager.instance.isGameStarted)
+        {
+            return;
+        }
+
         switch (id)
         {
             case 0:

@@ -38,9 +38,22 @@ public class Player : MonoBehaviour
     //    inputVec.y = Input.GetAxisRaw("Vertical");
     //}
 
+    private void Update()
+    {
+        if (!GameManager.instance.isGameStarted)
+        {
+            return;
+        }
+    }
+
 
     void FixedUpdate()
     {
+        if (!GameManager.instance.isGameStarted)
+        {
+            return;
+        }
+
         Vector2 nextVec = inputVec * player_spd * Time.fixedDeltaTime;      
         // normalize는 어느 방향으로든 1만큼 이동시킴(특히 대각선 이동의 경우) ~ 지금은 InputSystem의 normalize기능을 사용하고 있어서 코드에 따로 추가할 필요 없음.
         // DeltaTime은 Update, FixedDeltaTime은 FixedUpdate의 프레임 하나가 소비한 시간
@@ -51,11 +64,41 @@ public class Player : MonoBehaviour
 
     void LateUpdate()
     {
+        if (!GameManager.instance.isGameStarted)
+        {
+            return;
+        }
+
         anim.SetFloat("Speed", inputVec.magnitude);     // magnitude는 순수하게 "크기"만 갖고 있는 성분이다. inputVec의 크기가 0인지 아닌지만 확인하기 위한 용도.
 
         if (inputVec.x != 0)
         {
             sp.flipX = inputVec.x > 0;      // inputVec.x가 0보다 작으면 true, 크면 false가 들어간다
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!GameManager.instance.isGameStarted)
+        {
+            return;
+        }
+        else if (collision.transform.CompareTag("Enemy"))
+        {
+            float dmg = collision.transform.GetComponent<Enemy>().dmg;
+            
+            GameManager.instance.curHp -= Time.deltaTime * dmg;
+            //GameManager.instance.curHp -= Time.deltaTime * 10;      // 플레이어가 받는 데미지 10
+
+            if (GameManager.instance.curHp < 0)     // 플레이어 사망 시 코드
+            {
+                for (int i = 2; i < transform.childCount; i++)      // player자식 중, Shadow와 Area 이후 것들을 다 비활성화 하기 위하여 0, 1빼고 2부터 index 시작
+                {
+                    transform.GetChild(i).gameObject.SetActive(false);
+                }
+
+                anim.SetTrigger("Death");
+            }
         }
     }
 

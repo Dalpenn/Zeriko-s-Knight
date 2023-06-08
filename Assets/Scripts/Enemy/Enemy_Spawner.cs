@@ -7,10 +7,9 @@ public class Enemy_Spawner : MonoBehaviour
     #region 변수들
     public Transform[] spawnPoint;
     public SpawnData[] spawnData;       // 여러 종류 몬스터의 데이터를 담당 할 것이므로, 배열로 선언
-    int level;
+    int Dungeonlevel;
     float timer;
     #endregion
-
 
     private void Awake()
     {
@@ -20,13 +19,18 @@ public class Enemy_Spawner : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.instance.isGameStarted)
+        {
+            return;
+        }
+
         timer += Time.deltaTime;
 
         #region 레벨에 따라 적 생성 ~ GameManager의 maxGameTime과 연동되어 조절됨
         //level = Mathf.FloorToInt(GameManager.instance.gameTime / 5f);      // Mathf함수의 FloorToInt : 소수점 아래는 버리고 Int형으로 바꾸는 함수 (반대로 올림은 CeilToInt)
-        level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / 5f), spawnData.Length - 1);      // 최대 level은 이렇게 설정 가능
+        Dungeonlevel = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / 5f), spawnData.Length - 1);      // 최대 level은 이렇게 설정 가능
 
-        if (timer > spawnData[level].spawnTime)     // Level에 따라 spawnData에 있는 spawnTime마다 적 생성
+        if (timer > spawnData[Dungeonlevel].spawnTime)     // Level에 따라 spawnData에 있는 spawnTime마다 적 생성
         {
             Spawn();
 
@@ -44,7 +48,7 @@ public class Enemy_Spawner : MonoBehaviour
         // GetComponentsInChildern에는 자기자신도 포함된다. 그러므로 spawnPoint에 enemySpawner의 위치도 포함되어 있는데, 여기서는 몬스터 생성할 것이 아니므로 0번은 제외하고 1번부터 소환장소를 랜덤으로 돌림
         #endregion
 
-        enemy.GetComponent<Enemy>().Init(spawnData[level]);
+        enemy.GetComponent<Enemy>().Init(spawnData[Dungeonlevel]);
     }
 }
 
@@ -54,7 +58,8 @@ public class SpawnData      // 소환 데이터를 담당하는 클래스 선언
 {
     public float spawnTime;
     public int spriteType;
-    public int hp;
+    public float hp;
     public float speed;
+    public float dmg;
 }
 #endregion
