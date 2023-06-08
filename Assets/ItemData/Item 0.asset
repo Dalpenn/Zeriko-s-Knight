@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e4179aba1a328a4490e3f2fc91c244b, type: 3}
+  m_Name: Item 0
+  m_EditorClassIdentifier: 
+  itemType: 0
+  itemID: 0
+  itemName: "\uAC80"
+  itemDesc: 
+  itemIcon: {fileID: 21300000, guid: 82e232c4b7118c044b006d312574bb11, type: 3}
+  baseDmg: 1
+  dmgs:
+  - 1
+  - 0.5
+  - 1.5
+  - 2
+  - 3
+  baseCount: 2
+  counts: 0100000001000000010000000200000004000000
+  baseSpeed: 150
+  speeds:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  passiveAmounts: []
+  projectile: {fileID: 1269363861354954969, guid: 2d7dd2ecfdf1b0e41a2435f722d57c87, type: 3}

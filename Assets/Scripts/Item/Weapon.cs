@@ -11,6 +11,9 @@ public class Weapon : MonoBehaviour
     public int count;
     public float speed;
 
+    public float temp;
+    public float spd_init;
+
     float timer;
 
     Player player;
@@ -18,18 +21,10 @@ public class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        // weapon오브젝트는 player오브젝트의 하위 오브젝트다
-        // GetComponent는 동일한 계층에서만 가져올 수 있음
-        // 그러므로 상위 계층(부모)인 player의 컴포넌트를 가져오기 위해서는 GetComponentInParent를 사용해야 함
-        player = GetComponentInParent<Player>();
+        player = GameManager.instance.player;
     }
 
-    private void Start()
-    {
-        Init();
-    }
-
-    private void Update()
+    private void Update()       // 무기 수치 지속적인 업데이트 (레벨업 시 고려)
     {
         switch (id)
         {
@@ -55,38 +50,76 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    #region 무기들 초기 설정값
+    public void Init(ItemData data)
+    {
+        #region Basic Setting
+        //====================================================================================
+        name = "Weapon " + data.itemName;
+        transform.parent = player.transform;        // 생성된 무기의 부모는 player가 되도록 설정
+        transform.localPosition = Vector3.zero;     // 생성된 무기 위치를 player안에서 (0, 0, 0)으로 맞추기 ~ 그래야 플레이어 위치에 스킬이 소환되므로
+        //====================================================================================
+        #endregion
+
+        #region Property Setting
+        //====================================================================================
+        id = data.itemID;
+        dmg = data.baseDmg;
+        count = data.baseCount;
+        speed = data.baseSpeed;
+        spd_init = speed;
+
+        for (int i = 0; i < GameManager.instance.poolMng.prefs.Length; i++)
+        {
+            if (data.projectile == GameManager.instance.poolMng.prefs[i])
+            {
+                prefab_Id = i;
+                break;
+            }
+        }
+        //====================================================================================
+        #endregion
+
+        switch (id)
+        {
+            case 0:
+                {
+                    Weap1_Sword();
+
+                    break;
+                }
+            case 1:
+                {
+                    break;
+                }
+            case 2:
+                {
+                    break;
+                }
+
+            default: { break; }
+        }
+
+        player.BroadcastMessage("Apply_PlayerPassive", SendMessageOptions.DontRequireReceiver);         // 갖고 있는 모든 자식 오브젝트에게 "Apply_PlayerPassive" 함수를 실행하라고 알림
+    }
+    #endregion
+
     #region 레벨업 시, 무기 성능 업그레이드
     public void LevelUp(float dmg, int count)
     {
+        temp = speed;
+
         this.dmg += dmg;
         this.count += count;
 
         if (id == 0)        // 레벨업 하는 경우, 무기 id에 따라 함수 실행
         {
-            Weap1_Sword();
+            Weap1_Sword();      // 회전체 같은 경우에는 레벨업 마다 추가된 회전체에 따른 각도와 위치를 설정해줘야 해서 초기화가 필요
         }
-    }
-    #endregion
 
-    #region 무기들 초기 설정값
-    public void Init()
-    {
-        switch (id)
-        {
-            case 0:     // speed : 무기의 회전방향
-                {
-                    //speed = 150;       // 무기0이 시계방향으로 회전
-                    Weap1_Sword();
-
-                    break;
-                }
-
-            default:    // speed : 연사 속도
-                {
-                    //speed = 0.3f;
-                    break;
-                }
-        }
+        player.BroadcastMessage("Apply_PlayerPassive", SendMessageOptions.DontRequireReceiver);
+        
+        speed = temp;
     }
     #endregion
 

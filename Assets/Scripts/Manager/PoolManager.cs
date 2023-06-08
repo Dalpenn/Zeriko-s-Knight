@@ -6,7 +6,7 @@ public class PoolManager : MonoBehaviour
 {
     #region 변수들
     // 프리펩들을 보관할 변수
-    public GameObject[] enemy_prefs;        // 여러 변수들을 담을 수 있는 배열로 초기화 (유니티에서 프리팹들을 전부 선택해서 스크립트의 enemy_prefs로 드래그하면 자동으로 모두 등록됨)
+    public GameObject[] prefs;        // 여러 변수들을 담을 수 있는 배열로 초기화 (유니티에서 프리팹들을 전부 선택해서 스크립트의 enemy_prefs로 드래그하면 자동으로 모두 등록됨)
 
     // 오브젝트 풀들을 저장할 리스트 (각각의 풀 안에는 여러개의 프리팹들이 들어감)
     List<GameObject>[] enemy_pools;
@@ -15,7 +15,7 @@ public class PoolManager : MonoBehaviour
 
     private void Awake()
     {
-        enemy_pools = new List<GameObject>[enemy_prefs.Length];     // 리스트에 변수들 개수를 넣음 (프리팹의 종류 개수 만큼)
+        enemy_pools = new List<GameObject>[prefs.Length];     // 리스트에 변수들 개수를 넣음 (프리팹의 종류 개수 만큼)
 
         for(int i = 0; i < enemy_pools.Length; i++) 
         {
@@ -44,7 +44,7 @@ public class PoolManager : MonoBehaviour
         // 못 발견하면 새롭게 생성하여 select 변수에 할당
         if (select == null)     // (!select) 도 가능 
         {
-            select = Instantiate(enemy_prefs[i], transform);        // PoolManager의 자식 오브젝트로 들어가도록 뒤에 transform을 넣어줌
+            select = Instantiate(prefs[i], transform);        // PoolManager의 자식 오브젝트로 들어가도록 뒤에 transform을 넣어줌
             enemy_pools[i].Add(select);         // 새롭게 생성된 prefab 게임오브젝트는 오브젝트풀 안에 들어있지 않으므로, enemy_pools[i]에 새롭게 생성한 select 변수를 넣어줌
         }
 

@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
 {
     #region º¯¼öµé
     public Vector2 inputVec;
-    float player_spd = 3;
+    public float player_spd = 3;
+    public float player_initSpd;
 
     public Scanner scanner;
 
@@ -25,6 +26,8 @@ public class Player : MonoBehaviour
         sp = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         #endregion
+
+        player_initSpd = player_spd;
     }
 
 
@@ -61,12 +64,6 @@ public class Player : MonoBehaviour
     void OnMove(InputValue value)
     {
         inputVec = value.Get<Vector2>();
-    }
-
-    void OnJump(InputValue value) 
-    {
-
-        GameManager.instance.weapon.LevelUp(0.5f, 1);
     }
     #endregion
 }
