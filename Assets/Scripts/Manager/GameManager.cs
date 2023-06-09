@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public int stageLv;
 
     [Header("# Player Info")]
+    public int playerID;
+
     private int curhp_property;
     public int curHp    // 프로퍼티를 사용하여 curHp를 사용 할 때마다, hpController의 HPBarSync로 자동으로 동기화하도록 설정
     {
@@ -96,11 +98,13 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region 게임 시작
-    public void GameStart()
+    public void GameStart(int id)
     {
+        playerID = id;
         curHp = maxHp;              // 시작 시 플레이어 hp 최대로 만들기
+        player.gameObject.SetActive(true);
 
-        ui_SelectSkill.ShowScreen_Skill();      // 게임 시작 시, 스킬 선택지 주기
+        ui_SelectSkill.SelectStartSkill(playerID % 2);          // 게임 시작 시, 플레이어 직업에 따라 스킬 선택지 주기
 
         GameResume();               // result 화면이 뜰때 멈춰놨던 timeScale을 다시 1로 만들어야 하므로
     }

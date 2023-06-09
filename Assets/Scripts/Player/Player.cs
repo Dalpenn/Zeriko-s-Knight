@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     bool isDamaged = false;
 
     public Scanner scanner;
+    public RuntimeAnimatorController[] animCtrl;
 
     Rigidbody2D rigid;
     SpriteRenderer sp;
@@ -28,8 +29,14 @@ public class Player : MonoBehaviour
         sp = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         #endregion
+    }
 
+    private void OnEnable()
+    {
+        player_spd *= Character.movSpd;
         player_initSpd = player_spd;
+
+        anim.runtimeAnimatorController = animCtrl[GameManager.instance.playerID];       // 선언해준 runtimeAnimCtrl에 플레이어 아이디에 맞는 애니컨트롤러를 넣어줌
     }
 
     #region InputSystem 사용않을 경우 플레이어 이동 코드
