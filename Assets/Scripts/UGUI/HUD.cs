@@ -40,14 +40,14 @@ public class HUD : MonoBehaviour
                     // 원하는 변수의 숫자값을 지정된 형태의 문자열로 만들어주는 함수
                     // Format("원하는 문자열 {0:소수점지정}", 넣을 변수)
                     // 넣고싶은 변수를 지정한 소수점 자릿수로 문자열과 함께 { } 안에 넣어줌 ~ F0 : 소수점 0자리 / D0 : 0자리 숫자로 유지 (1일때는 01로 출력됨)
-                    myTxt.text = string.Format("Level {0:F0}", GameManager.instance.level);
+                    myTxt.text = string.Format("Level   {0:F0}", GameManager.instance.level);
                     //myTxt.text = string.Format("Level {0:F0}   ({1:F1}%)", GameManager.instance.level, lvPercent);        // 레벨 옆에 경험치 퍼센트도 나타냄
 
                     break;
                 }
             case InfoType.Kill:
                 {
-                    myTxt.text = string.Format("{0:F0} / {1:F0}", GameManager.instance.curKill, GameManager.instance.nextKill[GameManager.instance.stageLv]);
+                    myTxt.text = string.Format("{0:F0}  /  {1:F0}", GameManager.instance.curKill, GameManager.instance.nextKill[GameManager.instance.stageLv]);
 
                     break;
                 }

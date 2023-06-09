@@ -60,6 +60,5 @@ public class SpawnData      // 소환 데이터를 담당하는 클래스 선언
     public int spriteType;
     public float hp;
     public float speed;
-    public float dmg;
 }
 #endregion

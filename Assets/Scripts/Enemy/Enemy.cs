@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour
     public float speed;
     public float hp;
     public float maxHp;
-    public float dmg;
     public RuntimeAnimatorController[] animCon;     // 여러 종류의 몬스터를 쓸 것이므로 배열로 선언
     public Rigidbody2D target;
 
@@ -87,7 +86,6 @@ public class Enemy : MonoBehaviour
         speed = data.speed;
         maxHp = data.hp;
         hp = data.hp;
-        dmg = data.dmg;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

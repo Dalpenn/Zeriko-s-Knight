@@ -101,7 +101,7 @@ public class Item : MonoBehaviour
 
                     break;
                 }
-//================================================================ 패시브 관련 레벨업 버튼
+//================================================================ 패시브 관련 레벨업 버튼    // 최대체력증가 하나 만들어보자
             case ItemData.ItemType.PlayerPassive_Rate:
             case ItemData.ItemType.PlayerPassive_MovSpd:
                 {
@@ -132,6 +132,7 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.Heal:
                 {
                     GameManager.instance.curHp = GameManager.instance.maxHp;
+                    //GameManager.instance.hpCtrl.HPBarSync();
 
                     break;
                 }
