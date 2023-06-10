@@ -69,8 +69,8 @@ public class Weapon : MonoBehaviour
         #region Property Setting
         //====================================================================================
         id = data.itemID;
-        dmg = data.baseDmg;
-        count = data.baseCount;
+        dmg = data.baseDmg * Character.dmg;             // 직업 효과 적용
+        count = data.baseCount + Character.count;       // 직업 효과 적용
         speed = data.baseSpeed;
         spd_init = speed;
 

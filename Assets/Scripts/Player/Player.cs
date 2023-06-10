@@ -33,7 +33,10 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        player_spd *= Character.movSpd;
+        #region 플레이어 직업에 따른 초기 이동속도 설정
+        player_spd *= Character.movSpd;         // 직업특성에 따른 이동속도 증감 (없으면 1, 있으면 그 수치가 들어감)
+        #endregion
+
         player_initSpd = player_spd;
 
         anim.runtimeAnimatorController = animCtrl[GameManager.instance.playerID];       // 선언해준 runtimeAnimCtrl에 플레이어 아이디에 맞는 애니컨트롤러를 넣어줌

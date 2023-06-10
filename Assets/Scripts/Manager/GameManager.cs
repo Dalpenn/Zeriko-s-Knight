@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public int playerID;
 
     private int curhp_property;
-    public int curHp    // 프로퍼티를 사용하여 curHp를 사용 할 때마다, hpController의 HPBarSync로 자동으로 동기화하도록 설정
+    public int curHp        // 프로퍼티를 사용하여 curHp를 사용 할 때마다, hpController의 HPBarSync로 자동으로 동기화하도록 설정
     {
         get 
         { 

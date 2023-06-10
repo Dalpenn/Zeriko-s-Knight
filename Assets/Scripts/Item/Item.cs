@@ -53,7 +53,7 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.PlayerPassive_Rate:
             case ItemData.ItemType.PlayerPassive_MovSpd:
                 {
-                    txtDesc.text = string.Format(data.itemDesc, data.passiveAmounts[level]);
+                    txtDesc.text = string.Format(data.itemDesc, data.passiveAmounts[level] * 100);
 
                     break;
                 }

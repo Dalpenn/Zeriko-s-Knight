@@ -25,8 +25,8 @@ public class Passives_Player : MonoBehaviour
         //====================================================================================
         type = data.itemType;
         rate = data.passiveAmounts[0];
-        rate_final_plus = 1 + (rate / 100);
-        rate_final_minus = 1 - (rate / 100);
+        rate_final_plus = 1 + rate;
+        rate_final_minus = 1 - rate;
         //====================================================================================
         #endregion
 
@@ -38,8 +38,8 @@ public class Passives_Player : MonoBehaviour
     public void LevelUp(float rate)
     {
         #region 패시브 레벨업 마다 복리로 속도 계산 (증가, 감소)
-        rate_final_plus *= (1 + (rate / 100));
-        rate_final_minus *= (1 - (rate / 100));
+        rate_final_plus *= (1 + rate);
+        rate_final_minus *= (1 - rate);
         #endregion
 
         this.rate = rate;
