@@ -20,12 +20,18 @@ public class Ctrl_Sc_SelectSkill : MonoBehaviour
         ShowSkillList();
         rect.localScale = Vector3.one;
         GameManager.instance.GamePause();
+
+        AudioManager.instance.PlaySFX(AudioManager.SFX.LevelUp);
+        AudioManager.instance.EffectBGM(true);         // 레벨업 시에는 배경음악 잠시 멈춤
     }
 
     public void HideScreen_Skill()
     {
         rect.localScale = Vector3.zero;
         GameManager.instance.GameResume();
+
+        AudioManager.instance.PlaySFX(AudioManager.SFX.Select);
+        AudioManager.instance.EffectBGM(false);         // 레벨업 후 스킬선택하면 다시 배경음악 재생
     }
 
     public void SelectStartSkill(int i)     // 처음 시작하자마자 무기 얻는 함수

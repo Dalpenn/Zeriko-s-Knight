@@ -107,6 +107,9 @@ public class GameManager : MonoBehaviour
         ui_SelectSkill.SelectStartSkill(playerID % 2);          // 게임 시작 시, 플레이어 직업에 따라 스킬 선택지 주기
 
         GameResume();               // result 화면이 뜰때 멈춰놨던 timeScale을 다시 1로 만들어야 하므로
+
+        AudioManager.instance.PlayBGM(true);
+        AudioManager.instance.PlaySFX(AudioManager.SFX.Select);
     }
     #endregion
 
@@ -148,7 +151,7 @@ public class GameManager : MonoBehaviour
     IEnumerator GameOverRoutine()
     {
         // 먼저 게임을 중지
-        isGameStarted = false;
+        isGameStarted = false ;
 
         // 플레이어 죽는 모션 나오기 기다림
         yield return new WaitForSeconds(1.0f);
@@ -157,6 +160,9 @@ public class GameManager : MonoBehaviour
         ui_Result.DungeonFailed();
 
         GamePause();
+
+        AudioManager.instance.PlayBGM(false);
+        AudioManager.instance.PlaySFX(AudioManager.SFX.Lose);
     }
     #endregion
 
@@ -179,6 +185,9 @@ public class GameManager : MonoBehaviour
         ui_Result.DungeonCleared();
 
         GamePause();
+
+        AudioManager.instance.PlayBGM(false);
+        AudioManager.instance.PlaySFX(AudioManager.SFX.Win);
     }
     #endregion
 }

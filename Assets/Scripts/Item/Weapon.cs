@@ -153,7 +153,7 @@ public class Weapon : MonoBehaviour
             playerAttack.Rotate(rotVec);
             playerAttack.Translate(playerAttack.up * 1.8f, Space.World);
 
-            playerAttack.GetComponent<PlayerAttack>().Init(dmg, -1, Vector3.zero);        // -1 is Infinity penetrate (-1은 무한관통을 의미한다는 주석), 이 무기에 방향요소는 필요없으므로 Vector3.zero를 넣는다
+            playerAttack.GetComponent<PlayerAttack>().Init(dmg, -100, Vector3.zero);        // -100 is Infinity penetrate (-100은 무한관통을 의미한다는 주석), 이 무기에 방향요소는 필요없으므로 Vector3.zero를 넣는다
             #endregion
         }
     }
@@ -181,6 +181,8 @@ public class Weapon : MonoBehaviour
             playerAttack.rotation = Quaternion.FromToRotation(Vector3.up, dir);         // FromToRotation : 지정된 축을 중심으로 목표를 향해 회전하는 함수 ~ z축 회전을 위해 축을 Vector3.up으로 잡음(0, 1, 0)
             playerAttack.GetComponent<PlayerAttack>().Init(dmg, count, dir);
             #endregion
+
+            AudioManager.instance.PlaySFX(AudioManager.SFX.Range);
         }
     }
     #endregion

@@ -102,6 +102,8 @@ public class Enemy : MonoBehaviour
         if (hp > 0)
         {
             anim.SetTrigger("Hit");
+
+            AudioManager.instance.PlaySFX(AudioManager.SFX.Hit);
         }
         else
         {
@@ -120,11 +122,16 @@ public class Enemy : MonoBehaviour
             GameManager.instance.GetExp();
             #endregion
 
+            if (GameManager.instance.isGameStarted)     // 게임이 진행중일 때만 재생 ~ 게임 끝나면 재생X (게임 이기면 모든 몬스터들 다 죽이는데, 이 때 한번에 모든 몬스터들의 죽는 사운드 재생되는 것을 방지)
+            {
+                AudioManager.instance.PlaySFX(AudioManager.SFX.Dead);
+            }
+
             // Dead(); 함수는 여기서 바로 실행하면 죽는 모션이 나오기 전에 비활성화되므로, 애니메이션에서 Event추가로 실행시킬 것임
         }
     }
 
-    void Dead()     // 몬스터가 죽었을 때의 함수
+    void Dead()     // 몬스터가 죽었을 때의 함수 ~ 애니메이션 Event에서 추가해놓은 함수
     {
         gameObject.SetActive(false);
     }

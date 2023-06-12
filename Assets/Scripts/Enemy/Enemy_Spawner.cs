@@ -7,6 +7,7 @@ public class Enemy_Spawner : MonoBehaviour
     #region 변수들
     public Transform[] spawnPoint;
     public SpawnData[] spawnData;       // 여러 종류 몬스터의 데이터를 담당 할 것이므로, 배열로 선언
+    public float levelTime;
     int Dungeonlevel;
     float timer;
     #endregion
@@ -14,6 +15,7 @@ public class Enemy_Spawner : MonoBehaviour
     private void Awake()
     {
         spawnPoint = GetComponentsInChildren<Transform>();      // Enemy_Spawner오브젝트의 자식오브젝트들(소환 장소들) 위치를 싹 다 가져오는 것이므로, GetComponent"s" 를 써야 함
+        levelTime = GameManager.instance.maxGameTime / spawnData.Length;        // 던전 버텨야하는 시간을 몬스터종류로 나눠서, 같은 시간마다 던전레벨이 하나씩 자동으로 오르게 설정
     }
 
 
@@ -28,7 +30,7 @@ public class Enemy_Spawner : MonoBehaviour
 
         #region 레벨에 따라 적 생성 ~ GameManager의 maxGameTime과 연동되어 조절됨
         //level = Mathf.FloorToInt(GameManager.instance.gameTime / 5f);      // Mathf함수의 FloorToInt : 소수점 아래는 버리고 Int형으로 바꾸는 함수 (반대로 올림은 CeilToInt)
-        Dungeonlevel = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / 5f), spawnData.Length - 1);      // 최대 level은 이렇게 설정 가능
+        Dungeonlevel = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / levelTime), spawnData.Length - 1);      // 최대 level은 이렇게 설정 가능
 
         if (timer > spawnData[Dungeonlevel].spawnTime)     // Level에 따라 spawnData에 있는 spawnTime마다 적 생성
         {
