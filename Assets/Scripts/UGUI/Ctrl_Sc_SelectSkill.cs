@@ -15,6 +15,7 @@ public class Ctrl_Sc_SelectSkill : MonoBehaviour
         items = GetComponentsInChildren<Item>(true);        // 비활성화된 아이템도 있으니, 모두 일단 활성화되도록 true로 설정
     }
 
+    #region 스킬 선택창 열기
     public void ShowScreen_Skill()
     {
         ShowSkillList();
@@ -24,7 +25,9 @@ public class Ctrl_Sc_SelectSkill : MonoBehaviour
         AudioManager.instance.PlaySFX(AudioManager.SFX.LevelUp);
         AudioManager.instance.EffectBGM(true);         // 레벨업 시에는 배경음악 잠시 멈춤
     }
+    #endregion
 
+    #region 스킬 선택창 닫기
     public void HideScreen_Skill()
     {
         rect.localScale = Vector3.zero;
@@ -33,12 +36,16 @@ public class Ctrl_Sc_SelectSkill : MonoBehaviour
         AudioManager.instance.PlaySFX(AudioManager.SFX.Select);
         AudioManager.instance.EffectBGM(false);         // 레벨업 후 스킬선택하면 다시 배경음악 재생
     }
+    #endregion
 
+    #region 시작 스킬 선택
     public void SelectStartSkill(int i)     // 처음 시작하자마자 무기 얻는 함수
     {
         items[i].OnClick();
     }
+    #endregion
 
+    #region 스킬 선택창 리스트 설정
     void ShowSkillList()
     {
         // 1. 모든 스킬 비활성화
@@ -78,4 +85,6 @@ public class Ctrl_Sc_SelectSkill : MonoBehaviour
             }
         }
     }
+
+    #endregion
 }
